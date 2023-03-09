@@ -60,21 +60,21 @@ class App extends Component {
   };
 
   handleAuthLogin = () => {
-    this.requestAuthData(
-      "InApp:951444e79f10729e2c2391c0b4434587a0716df87ac3b7e0"
-    );
-    // window.handleinitDataCallback = (token) => {
-    //   this.requestAuthData(token);
-    // };
-    // // let loading = weui.loading("loading", {});
-    // let obj = JSON.stringify({
-    //   functionName: "js_fun_h5GetAccessToken",
-    //   params: {
-    //     appid: "930231098009602",
-    //     functionCallBackName: "handleinitDataCallback",
-    //   },
-    // });
-    // window.consumerapp.evaluate(obj);
+    // this.requestAuthData(
+    //   "InApp:951444e79f10729e2c2391c0b4434587a0716df87ac3b7e0"
+    // );
+    window.handleinitDataCallback = (token) => {
+      this.requestAuthData(token);
+    };
+    // let loading = weui.loading("loading", {});
+    let obj = JSON.stringify({
+      functionName: "js_fun_h5GetAccessToken",
+      params: {
+        appid: "930231098009602",
+        functionCallBackName: "handleinitDataCallback",
+      },
+    });
+    window.consumerapp.evaluate(obj);
   };
 
   requestAuthData = (token) => {
