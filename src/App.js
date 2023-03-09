@@ -16,7 +16,6 @@ class App extends Component {
 
   autoLogin = () => {
     window.handleinitDataCallback = (token) => {
-      // alert(token);
       this.handleAuthData(token);
     };
     // let loading = weui.loading("loading", {});
@@ -90,7 +89,7 @@ class App extends Component {
             <div className="amount" id="product_list">
               <div onClick={() => this.selectProduct(10)} class="per perb">
                 <div class="tips">
-                  <img src="img/diamonds_1.png" />
+                  <img lt="nkd" src="img/diamonds_1.png" />
                 </div>
                 <div className="dscription">
                   <div className="bg1">diamond_1</div>
@@ -99,7 +98,7 @@ class App extends Component {
               </div>
               <div onClick={() => this.selectProduct(20)} className="per perb">
                 <div className="tips">
-                  <img src="img/diamonds_1.png" />
+                  <img alt="nkd" src="img/diamonds_1.png" />
                 </div>
                 <div className="dscription">
                   <div className="bg1">diamond_2</div>
