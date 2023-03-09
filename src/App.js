@@ -31,7 +31,7 @@ class App extends Component {
 
   handleAuthData = (token) => {
     window
-      .fetch(this.state.baseUrl + "/apply/h5Token", {
+      .fetch(this.state.baseUrl + "/apply/h5token", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -64,13 +64,6 @@ class App extends Component {
         // loading.hide();
       });
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.product !== prevState.product) {
-      console.log(this.state.product);
-    }
-  }
-
   render() {
     return (
       <div className="App">
