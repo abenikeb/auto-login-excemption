@@ -63,7 +63,10 @@ class App extends Component {
     window.handleinitDataCallback = (token) => {
       this.requestAuthData(token);
     };
-    // let loading = weui.loading("loading", {});
+    this.setState({
+      ...this.state,
+      isLoading: true,
+    });
     let obj = JSON.stringify({
       functionName: "js_fun_h5GetAccessToken",
       params: {
@@ -106,7 +109,10 @@ class App extends Component {
         alert(ex);
       })
       .finally(() => {
-        // loading.hide();
+        this.setState({
+          ...this.state,
+          isLoading: false,
+        });
       });
   };
 
@@ -155,12 +161,10 @@ class App extends Component {
           <button className="b" type="button" id="buy" onClick="startPay();">
             Pay Super App
           </button>
-          <div className="p">www.mobilelegends.com</div>
         </div>
       </div>
     ) : (
       <div>
-        {" "}
         <ReactLoading
           type="spinningBubbles"
           color="#25a5be"
