@@ -7,29 +7,77 @@ class App extends Component {
     selectedItem: false,
     baseUrl: "https://node-api-muxu.onrender.com",
     priceLists: [],
-    product: 0,
+    productValue: 0,
+    token: "",
+    error: {},
+    success: "",
+    isLoading: false,
+    selectedWaresInfo: undefined,
+    userData: {
+      open_id: "",
+      identityId: "",
+      identityType: "CUSTOMER",
+      walletIdentityId: "202000000000146178",
+      identifierType: "MSISDN",
+      identifier: "", //PhoneNumber
+      nickName: "", // FirstName
+      status: "", // Default is 03 it means active
+    },
   };
 
   selectProduct(itemIndex) {
     this.setState({ product: itemIndex });
   }
 
-  autoLogin = () => {
-    window.handleinitDataCallback = (token) => {
-      this.handleAuthData(token);
-    };
-    // let loading = weui.loading("loading", {});
-    let obj = JSON.stringify({
-      functionName: "js_fun_h5GetAccessToken",
-      params: {
-        appid: "930231098009602",
-        functionCallBackName: "handleinitDataCallback",
+  handleUserData = (user) => {
+    const {
+      open_id,
+      identityId,
+      identityType,
+      walletIdentityId,
+      identifierType,
+      identifier,
+      nickName,
+      status,
+    } = user.data.biz_content;
+
+    //Setting incoming data from from superApp server.
+    this.setState({
+      ...this.state,
+      isLoading: false,
+      success: "SUCCESS",
+      userData: {
+        ...this.state.userData,
+        open_id: open_id,
+        identityId: identityId,
+        identityType: identityType,
+        walletIdentityId: walletIdentityId,
+        identifier: identifier, //phone no
+        nickName: nickName, // firstName
+        status: status,
       },
     });
-    window.consumerapp.evaluate(obj);
   };
 
-  handleAuthData = (token) => {
+  handleAuthLogin = () => {
+    this.requestAuthData(
+      "InApp:951444e79f10729e2c2391c0b4434587a0716df87ac3b7e0"
+    );
+    // window.handleinitDataCallback = (token) => {
+    //   this.requestAuthData(token);
+    // };
+    // // let loading = weui.loading("loading", {});
+    // let obj = JSON.stringify({
+    //   functionName: "js_fun_h5GetAccessToken",
+    //   params: {
+    //     appid: "930231098009602",
+    //     functionCallBackName: "handleinitDataCallback",
+    //   },
+    // });
+    // window.consumerapp.evaluate(obj);
+  };
+
+  requestAuthData = (token) => {
     window
       .fetch(this.state.baseUrl + "/apply/h5token", {
         method: "post",
@@ -43,13 +91,15 @@ class App extends Component {
       .then((res) => {
         res
           .text()
-          .then((response) => {
-            if (!response) return;
+          .then((resAuth) => {
+            console.log("resAuth", resAuth);
+            if (!resAuth) return;
             if (!window.consumerapp) {
               console.log("this page is not open in app");
               return;
             }
-            alert(response.biz_content.nickName);
+            alert(resAuth);
+            this.handleUserData(resAuth);
           })
           .catch((error) => {
             console.log("error found");
@@ -64,6 +114,7 @@ class App extends Component {
         // loading.hide();
       });
   };
+
   render() {
     return (
       <div className="App">
@@ -72,7 +123,7 @@ class App extends Component {
             className="b"
             type="button"
             id="buy"
-            onClick={() => this.autoLogin()}
+            onClick={() => this.handleAuthLogin()}
           >
             Login with Telebirr
           </button>
