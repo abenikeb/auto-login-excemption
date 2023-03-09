@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Component } from "react";
+import ReactLoading from "react-loading";
 
 class App extends Component {
   state = {
@@ -39,12 +40,11 @@ class App extends Component {
       identifier,
       nickName,
       status,
-    } = user.data.biz_content;
+    } = user.biz_content;
 
     //Setting incoming data from from superApp server.
     this.setState({
       ...this.state,
-      isLoading: false,
       success: "SUCCESS",
       userData: {
         ...this.state.userData,
@@ -52,17 +52,14 @@ class App extends Component {
         identityId: identityId,
         identityType: identityType,
         walletIdentityId: walletIdentityId,
-        identifier: identifier, //phone no
-        nickName: nickName, // firstName
+        identifier: identifier, //Phone no
+        nickName: nickName, // FirstName
         status: status,
       },
     });
   };
 
   handleAuthLogin = () => {
-    // this.requestAuthData(
-    //   "InApp:951444e79f10729e2c2391c0b4434587a0716df87ac3b7e0"
-    // );
     window.handleinitDataCallback = (token) => {
       this.requestAuthData(token);
     };
@@ -98,14 +95,12 @@ class App extends Component {
               console.log("this page is not open in app");
               return;
             }
-            alert(resAuth);
+            // alert(resAuth);
             this.handleUserData(resAuth);
           })
           .catch((error) => {
             console.log("error found");
-            alert("ERROR", error);
-          })
-          .finally(() => {});
+          });
       })
       .catch((ex) => {
         alert(ex);
@@ -116,9 +111,13 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <div className="App">
-        <div className="home">
+    const { nickName } = this.state.userData;
+
+    const userRender = !this.state.isLoading ? (
+      <div>
+        {nickName ? (
+          nickName
+        ) : (
           <button
             className="b"
             type="button"
@@ -127,37 +126,53 @@ class App extends Component {
           >
             Login with Telebirr
           </button>
+        )}
 
-          <div className="content">
-            <p>Amount</p>
-            <div className="amount" id="product_list">
-              <div onClick={() => this.selectProduct(10)} class="per perb">
-                <div class="tips">
-                  <img lt="nkd" src="img/diamonds_1.png" />
-                </div>
-                <div className="dscription">
-                  <div className="bg1">diamond_1</div>
-                  <div className="bg2 fn2">10 USD</div>
-                </div>
+        <div className="content">
+          <p>Amount</p>
+          <div className="amount" id="product_list">
+            <div onClick={() => this.selectProduct(10)} class="per perb">
+              <div class="tips">
+                <img lt="nkd" src="img/diamonds_1.png" />
               </div>
-              <div onClick={() => this.selectProduct(20)} className="per perb">
-                <div className="tips">
-                  <img alt="nkd" src="img/diamonds_1.png" />
-                </div>
-                <div className="dscription">
-                  <div className="bg1">diamond_2</div>
-                  <div className="bg2 fn2">20 USD</div>
-                </div>
+              <div className="dscription">
+                <div className="bg1">diamond_1</div>
+                <div className="bg2 fn2">10 USD</div>
+              </div>
+            </div>
+            <div onClick={() => this.selectProduct(20)} className="per perb">
+              <div className="tips">
+                <img alt="nkd" src="img/diamonds_1.png" />
+              </div>
+              <div className="dscription">
+                <div className="bg1">diamond_2</div>
+                <div className="bg2 fn2">20 USD</div>
               </div>
             </div>
           </div>
-          <div className="footer" id="foot">
-            <button className="b" type="button" id="buy" onClick="startPay();">
-              Pay Super App
-            </button>
-            <div className="p">www.mobilelegends.com</div>
-          </div>
         </div>
+        <div className="footer" id="foot">
+          <button className="b" type="button" id="buy" onClick="startPay();">
+            Pay Super App
+          </button>
+          <div className="p">www.mobilelegends.com</div>
+        </div>
+      </div>
+    ) : (
+      <div>
+        {" "}
+        <ReactLoading
+          type="spinningBubbles"
+          color="#25a5be"
+          height={"10%"}
+          width={"10%"}
+          className="loading"
+        />
+      </div>
+    );
+    return (
+      <div className="App">
+        <div className="home">{userRender}</div>
       </div>
     );
   }
