@@ -16,7 +16,7 @@ class App extends Component {
 
   autoLogin = () => {
     window.handleinitDataCallback = (token) => {
-      alert(token);
+      // alert(token);
       this.handleAuthData(token);
     };
     // let loading = weui.loading("loading", {});
@@ -54,8 +54,12 @@ class App extends Component {
           })
           .catch((error) => {
             console.log("error found");
+            alert("ERROR", error);
           })
           .finally(() => {});
+      })
+      .catch((ex) => {
+        alert(ex);
       })
       .finally(() => {
         // loading.hide();
