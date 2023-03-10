@@ -6,7 +6,8 @@ import ReactLoading from "react-loading";
 class App extends Component {
   state = {
     selectedItem: false,
-    baseUrl: "https://node-api-muxu.onrender.com",
+    // baseUrl: "https://node-api-muxu.onrender.com",
+    baseUrl: "http://localhost:8081",
     priceLists: [],
     productValue: 0,
     token: "",
@@ -98,7 +99,7 @@ class App extends Component {
               console.log("this page is not open in app");
               return;
             }
-            // alert(resAuth);
+            alert(resAuth);
             this.handleUserData(resAuth);
           })
           .catch((error) => {
