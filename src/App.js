@@ -6,8 +6,8 @@ import ReactLoading from "react-loading";
 class App extends Component {
   state = {
     selectedItem: false,
-    // baseUrl: "https://node-api-muxu.onrender.com",
-    baseUrl: "http://localhost:8081",
+    baseUrl: "https://node-api-muxu.onrender.com",
+    // baseUrl: "http://localhost:8081",
     priceLists: [],
     productValue: 0,
     token: "",
@@ -30,35 +30,6 @@ class App extends Component {
   selectProduct(itemIndex) {
     this.setState({ product: itemIndex });
   }
-
-  handleUserData = (user) => {
-    const {
-      open_id,
-      identityId,
-      identityType,
-      walletIdentityId,
-      identifierType,
-      identifier,
-      nickName,
-      status,
-    } = user.biz_content;
-
-    //Setting incoming data from from superApp server.
-    this.setState({
-      ...this.state,
-      success: "SUCCESS",
-      userData: {
-        ...this.state.userData,
-        open_id: open_id,
-        identityId: identityId,
-        identityType: identityType,
-        walletIdentityId: walletIdentityId,
-        identifier: identifier, //Phone no
-        nickName: nickName, // FirstName
-        status: status,
-      },
-    });
-  };
 
   handleAuthLogin = () => {
     window.handleinitDataCallback = (token) => {
@@ -99,15 +70,16 @@ class App extends Component {
               console.log("this page is not open in app");
               return;
             }
-            alert(resAuth);
+            alert("resAuth", resAuth);
             this.handleUserData(resAuth);
           })
           .catch((error) => {
             console.log("error found");
+            alert("error found", error);
           });
       })
       .catch((ex) => {
-        alert(ex);
+        alert("Exception found", ex);
       })
       .finally(() => {
         this.setState({
@@ -117,23 +89,48 @@ class App extends Component {
       });
   };
 
+  handleUserData = (user) => {
+    const {
+      open_id,
+      identityId,
+      identityType,
+      walletIdentityId,
+      identifierType,
+      identifier,
+      nickName,
+      status,
+    } = user.biz_content;
+
+    //Setting incoming data from from superApp server.
+    this.setState({
+      ...this.state,
+      success: "SUCCESS",
+      userData: {
+        ...this.state.userData,
+        open_id: open_id,
+        identityId: identityId,
+        identityType: identityType,
+        walletIdentityId: walletIdentityId,
+        identifier: identifier, //Phone no
+        nickName: nickName, // FirstName
+        status: status,
+      },
+    });
+  };
+
   render() {
     const { nickName } = this.state.userData;
 
-    const userRender = !this.state.isLoading ? (
+    const userRender = (
       <div>
-        {nickName ? (
-          nickName
-        ) : (
-          <button
-            className="b"
-            type="button"
-            id="buy"
-            onClick={() => this.handleAuthLogin()}
-          >
-            Login with Telebirr
-          </button>
-        )}
+        <button
+          className="b"
+          type="button"
+          id="buy"
+          onClick={() => this.handleAuthLogin()}
+        >
+          Login with Telebirr
+        </button>
 
         <div className="content">
           <p>Amount</p>
@@ -164,17 +161,8 @@ class App extends Component {
           </button>
         </div>
       </div>
-    ) : (
-      <div>
-        <ReactLoading
-          type="spinningBubbles"
-          color="#25a5be"
-          height={"10%"}
-          width={"10%"}
-          className="loading"
-        />
-      </div>
     );
+
     return (
       <div className="App">
         <div className="home">{userRender}</div>
