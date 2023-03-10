@@ -90,32 +90,31 @@ class App extends Component {
   };
 
   handleUserData = (user) => {
-    const {
-      open_id,
-      identityId,
-      identityType,
-      walletIdentityId,
-      identifierType,
-      identifier,
-      nickName,
-      status,
-    } = user.biz_content;
-
+    // const {
+    //   open_id,
+    //   identityId,
+    //   identityType,
+    //   walletIdentityId,
+    //   identifierType,
+    //   identifier,
+    //   nickName,
+    //   status,
+    // } = user.biz_content;
     //Setting incoming data from from superApp server.
-    this.setState({
-      ...this.state,
-      success: "SUCCESS",
-      userData: {
-        ...this.state.userData,
-        open_id: open_id,
-        identityId: identityId,
-        identityType: identityType,
-        walletIdentityId: walletIdentityId,
-        identifier: identifier, //Phone no
-        nickName: nickName, // FirstName
-        status: status,
-      },
-    });
+    // this.setState({
+    //   ...this.state,
+    //   success: "SUCCESS",
+    //   userData: {
+    //     ...this.state.userData,
+    //     open_id: open_id,
+    //     identityId: identityId,
+    //     identityType: identityType,
+    //     walletIdentityId: walletIdentityId,
+    //     identifier: identifier, //Phone no
+    //     nickName: nickName, // FirstName
+    //     status: status,
+    //   },
+    // });
   };
 
   render() {
