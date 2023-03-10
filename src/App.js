@@ -6,8 +6,8 @@ import ReactLoading from "react-loading";
 class App extends Component {
   state = {
     selectedItem: false,
-    baseUrl: "https://node-api-muxu.onrender.com",
-    // baseUrl: "http://localhost:8081",
+    // baseUrl: "https://node-api-muxu.onrender.com",
+    baseUrl: "http://localhost:8081",
     priceLists: [],
     productValue: 0,
     token: "",
