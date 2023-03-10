@@ -70,12 +70,12 @@ class App extends Component {
               console.log("this page is not open in app");
               return;
             }
-            alert("resAuth", resAuth);
+            alert(resAuth);
             this.handleUserData(resAuth);
           })
           .catch((error) => {
             console.log("error found");
-            alert("error found", error);
+            alert(error);
           });
       })
       .catch((ex) => {
